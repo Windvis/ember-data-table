@@ -1,15 +1,15 @@
 import { action, computed } from '@ember/object';
 import Component from '@ember/component';
-import layout from '../templates/components/th-sortable';
 
 export default Component.extend({
-  layout: layout,
   tagName: 'th',
   classNames: ['sortable'],
   classNameBindings: ['isSorted:sorted'],
+
   dasherizedField: computed('field', function () {
     return this.field.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
   }),
+
   /**
       Inverses the sorting parameter
       E.g. inverseSorting('title') returns '-title'
@@ -22,12 +22,14 @@ export default Component.extend({
       return '-' + sorting;
     }
   },
+
   isSorted: computed('dasherizedField', 'currentSorting', function () {
     return (
       this.currentSorting === this.dasherizedField ||
       this.currentSorting === this._inverseSorting(this.dasherizedField)
     );
   }),
+
   order: computed('dasherizedField', 'currentSorting', function () {
     if (this.currentSorting === this.dasherizedField) {
       return 'asc';
